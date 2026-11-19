@@ -1,5 +1,6 @@
-Abiotic Factor Mod Manager 2.0.0 Windows x64 release package.
-Self-contained WinUI 3 distribution for win-x64.
+Abiotic Factor Mod Manager 0.0.1 - Windows x64 release package.
+Self-contained portable application for managing Mod.io sideload mods and UE4SS mods together.
+Extract the complete archive into a folder of your choice and run AbioticFactorModManager.exe.
 English (en-us) resources only.
-Application settings, cache, backups, and generated storage are created locally in the app folder on first launch.
-The public build does not import previous-install folders or include personal game-file patches.
+The application creates its Data folder alongside the executable when first run.
+No previous-install migration or personal game-file patches are included.

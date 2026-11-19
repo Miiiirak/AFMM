@@ -1,63 +1,45 @@
 # Abiotic Factor Mod Manager
 
-A self-contained, 64-bit Windows desktop application for managing Abiotic Factor Mod.io sideload packages and UE4SS mods.
+**Abiotic Factor Mod Manager** helps you manage both major kinds of Abiotic Factor mods in one place:
 
-## Windows release
+- **Mod.io sideload mods** — browse and install sideload-ready Mod.io mods, then choose which ones are active.
+- **UE4SS mods** — install and manage UE4SS mods alongside your Mod.io sideload mods.
 
-1. Open the repository GitHub Releases page and download AbioticFactorModManager-2.0.0-Windows-x64.7z from the latest release.
-2. Extract the entire package to its own folder. Keep the executable, DLLs, resource folders, and scripts together.
-3. Run AbioticFactorModManager.exe. Windows may request administrator permission because the app writes game files and may update Steam's game configuration.
+You can use both types together. The manager keeps their install and launch setup organized so you do not have to manage mod folders and launch arguments by hand.
 
-The release is self-contained and includes its WinUI 3 / Windows App SDK runtime files. The only language satellite included is English (en-us). The matching unbuilt source bundle is also attached to the release as AbioticFactorModManager-2.0.0-Source.zip.
+## Install
 
-## Application data
+There is no installer or setup wizard. Installing the manager is just extracting the download.
 
-The manager creates a Data folder next to the executable. Saved settings, the protected Mod.io API key, installed-mod state, downloads, backups, logs, and Steam wrapper sidecar files are stored there. The app does not need a separate install location or a global user-data folder.
+1. Open the [Releases page](https://github.com/Miiiirak/AFMM/releases) and download **AbioticFactorModManager-0.0.1-Windows-x64.7z**.
+2. Extract the **entire** archive into a folder of your choice. For example, you can put it in Documents\Games\Abiotic Factor Mod Manager or another location you prefer.
+3. Open that folder and run **AbioticFactorModManager.exe**.
+4. Approve the Windows administrator prompt. The manager needs permission to install and manage game mods and, when requested, update Abiotic Factor's Steam launch options.
+5. On the first run, check the **Settings** page and make sure the correct Abiotic Factor game folder is selected. Add your Mod.io API key there if you want to browse Mod.io mods.
 
-The Steam sidecar files are stored under Data\Steam:
-- steam-modio-args.txt contains the current enabled Mod.io IDs and the required -SideloadMods flag.
-- steam-additional-args.txt contains the optional arguments saved in Settings.
-- SteamLaunchWrapper.ps1 is the wrapper invoked by Steam.
-- steam-launch-options-original.txt is the saved pre-manager Steam launch-options value used during uninstall.
+Keep the files together in the extracted folder. Do not move the EXE by itself or try to run it from inside the compressed archive.
 
-## Steam launch options and additional arguments
+## Install and manage mods
 
-Use **Set Up Steam** in Settings once to install the required static wrapper command into Abiotic Factor's Steam launch options. The command retains Steam's %command% placeholder and starts the real game executable.
+1. Open **Browse Mods** in the manager.
+2. Find a mod you want and use its install option. The manager supports Mod.io sideload mods and UE4SS mods.
+3. Open **Installed Mods** to see what is installed and turn mods on or off.
+4. You can have Mod.io sideload mods and UE4SS mods installed at the same time.
 
-The wrapper reads the latest files in Data\Steam each time the game launches. It appends arguments in this order:
-
-1. Steam's original game arguments.
-2. The manager-required Mod.io sideload arguments for enabled Mod.io mods.
-3. The optional additional launch arguments saved in the Settings textbox.
-
-Changing enabled Mod.io mods or saving the additional arguments updates the sidecar files; it does not rewrite the Steam launch-options command or require Steam to restart. The textbox is intended for arguments used alongside managed sideload mods. The manager reserves -Mods and -SideloadMods for its own use.
-
-When **Set Up Steam** is confirmed, the manager applies the static wrapper command and restarts Steam. Choosing the clipboard option copies the command without changing Steam's configuration.
+For Steam players: open **Settings** and click **Set Up Steam** once. Choose the option to apply the setup in Steam. Steam will restart so it can use the manager's launch setup. This is required for Steam to start Abiotic Factor with your enabled Mod.io sideload mods. The optional additional launch-options box lets you keep your own game arguments alongside the manager's required mod arguments.
 
 ## Uninstall
 
-Run Uninstall.bat from the application folder. The uninstaller asks:
+1. Close Abiotic Factor.
+2. Open the folder where you extracted the manager.
+3. Double-click **Uninstall.bat**.
+4. Answer the three questions:
+   - **Uninstall the manager and remove Mod.io mods from the game folder?** Choose y to remove the manager and its tracked Mod.io mod folders. Choosing n cancels the uninstall.
+   - **Remove UE4SS and its mods from the game folder?** Choose y to remove UE4SS and its installed mods, or n to leave them in place.
+   - **Remove Abiotic Factor's configured Steam launch options?** Choose y to restore the previous Steam launch options and restart Steam, or n to keep Steam configured with a standalone fallback that no longer loads the manager's mods.
 
-- Whether to uninstall the manager and remove its tracked Mod.io mod folders.
-- Whether to remove the UE4SS runtime and its mods.
-- Whether to remove the configured Steam launch options and restart Steam.
+When the uninstall finishes successfully, the manager's extracted folder is deleted too, including the EXE and Uninstall.bat. Your answers to the UE4SS and Steam questions decide whether those game/Steam changes are removed or left in place.
 
-Answering n to the first question cancels the uninstall. The UE4SS and Steam actions are independent choices. When Steam launch options are kept, the uninstaller relocates a vanilla fallback wrapper and the saved additional arguments to ProgramData so Steam no longer depends on the application folder. After a successful uninstall, the entire application folder, including the executable and uninstaller, is removed.
+## Source code
 
-Close Abiotic Factor before uninstalling. If Steam launch options are being removed, Steam must be allowed to close and restart.
-
-## Build from source
-
-The AbioticFactorModManager-Source package includes the WinUI 3 project and Build.ps1.
-
-On a Windows x64 development machine with the .NET 8 SDK and the required Windows App SDK / NuGet packages available:
-
-1. Extract the source package.
-2. Close any running copy of the manager.
-3. Run Build.ps1 from the extracted project root.
-
-The build publishes a self-contained WinUI 3 application and retains only the English resource satellite.
-
-## Safety
-
-Third-party mod code is not security-audited. Review mods before installing them. The manager does not manage game saves.
+The unbuilt source package is available as **AbioticFactorModManager-0.0.1-Source.zip** on the Releases page. It includes the WinUI project and the scripts needed to build the manager on Windows.

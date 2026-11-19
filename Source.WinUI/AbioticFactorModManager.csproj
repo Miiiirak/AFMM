@@ -14,7 +14,10 @@
     <ImplicitUsings>enable</ImplicitUsings>
     <RootNamespace>AbioticFactorModManager</RootNamespace>
     <AssemblyName>AbioticFactorModManager</AssemblyName>
-    <Version>2.0.0</Version>
+    <Version>0.0.1</Version>
+    <AssemblyVersion>0.0.1.0</AssemblyVersion>
+    <FileVersion>0.0.1.0</FileVersion>
+    <InformationalVersion>0.0.1</InformationalVersion>
     <RuntimeIdentifier>win-x64</RuntimeIdentifier>
     <WindowsTargetingOverridable>true</WindowsTargetingOverridable>
     <ApplicationManifest>app.manifest</ApplicationManifest>

@@ -1,8 +1,10 @@
-# GitHub release assets
+# Abiotic Factor Mod Manager 0.0.1
 
-Download the Windows x64 portable app and the unbuilt source ZIP from the repository's GitHub Releases page.
+Download the files below from the GitHub Releases page:
 
-- AbioticFactorModManager-2.0.0-Windows-x64.7z - self-contained application folder, English resources, Steam launch wrapper, and uninstaller.
-- AbioticFactorModManager-2.0.0-Source.zip - unbuilt WinUI project and build/uninstall scripts.
+- **AbioticFactorModManager-0.0.1-Windows-x64.7z** — the ready-to-run Windows application. Extract the complete archive into a folder of your choice and launch AbioticFactorModManager.exe.
+- **AbioticFactorModManager-0.0.1-Source.zip** — the unbuilt WinUI source package.
 
-SHA256SUMS.txt contains SHA-256 checksums for both release assets.
+The manager handles Mod.io sideload mods and UE4SS mods together. See the repository README for installation, mod-management, Steam setup, and uninstall instructions.
+
+SHA256SUMS.txt contains checksums for both downloads.
