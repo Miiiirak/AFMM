@@ -1,0 +1,5 @@
+Abiotic Factor Mod Manager 2.0.0 Windows x64 release package.
+Self-contained WinUI 3 distribution for win-x64.
+English (en-us) resources only.
+Application settings, cache, backups, and generated storage are created locally in the app folder on first launch.
+The public build does not import previous-install folders or include personal game-file patches.

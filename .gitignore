@@ -1,0 +1,24 @@
+# Build outputs
+**/bin/
+**/obj/
+.vs/
+TestResults/
+WinUIReleaseCandidate/
+GitHubPackages/
+
+# Per-install and user-specific data
+Data/
+Backups/
+Downloads/
+UnconfiguredGame/
+WinUI-startup.log
+*.log
+*.tmp
+*.bak
+
+# Local/user mod folders that do not belong in the public source package
+AbioticFactor_ManualMods/
+HoldCrouch/
+JumpMomentum/
+NoWristwatchGlow/
+

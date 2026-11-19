@@ -1,0 +1,29 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <RestorePackagesPath>$(UserProfile)\.nuget\packages</RestorePackagesPath>
+    <RestoreConfigFile>$(AppData)\NuGet\NuGet.Config</RestoreConfigFile>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net8.0-windows10.0.19041.0</TargetFramework>
+    <TargetPlatformMinVersion>10.0.17763.0</TargetPlatformMinVersion>
+    <WindowsSdkPackageVersion>10.0.26100.38</WindowsSdkPackageVersion>
+    <UseWinUI>true</UseWinUI>
+    <WindowsPackageType>None</WindowsPackageType>
+    <WindowsAppSDKSelfContained>true</WindowsAppSDKSelfContained>
+    <EnableMsixTooling>false</EnableMsixTooling>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <RootNamespace>AbioticFactorModManager</RootNamespace>
+    <AssemblyName>AbioticFactorModManager</AssemblyName>
+    <Version>2.0.0</Version>
+    <RuntimeIdentifier>win-x64</RuntimeIdentifier>
+    <WindowsTargetingOverridable>true</WindowsTargetingOverridable>
+    <ApplicationManifest>app.manifest</ApplicationManifest>
+    <ApplicationIcon>Assets\AbioticFactorModManager.ico</ApplicationIcon>
+    <Platforms>x64</Platforms>
+    <LangVersion>latest</LangVersion>
+  </PropertyGroup>
+  <ItemGroup>
+    <PackageReference Include="Microsoft.WindowsAppSDK" Version="2.6.5" />
+    <PackageReference Include="System.Security.Cryptography.ProtectedData" Version="8.0.0" />
+  </ItemGroup>
+</Project>
