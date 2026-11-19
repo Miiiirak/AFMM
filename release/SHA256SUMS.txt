@@ -1,2 +1,2 @@
-96029276303f8a0e922d404e74f3883cd013493a17d30b1cab1819085cb5a204  AbioticFactorModManager-0.0.1-Windows-x64.7z
-4e03d6124b44fa948feb1cf8b6ae96c7e67eceef62d24889c13d8818618ca1de  AbioticFactorModManager-0.0.1-Source.zip
+4618174dcafac44541fea4ac39180d984088894f08d96a7bcc5916f9270c4330  AbioticFactorModManager-0.0.1-Windows-x64.7z
+d350291338fb04fae85ba9bf0de903c44841aa9f4952bbbb8ca1742a6e45c725  AbioticFactorModManager-0.0.1-Source.zip
