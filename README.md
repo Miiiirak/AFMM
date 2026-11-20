@@ -26,7 +26,7 @@ Keep the files together in the extracted folder. The main folder contains the la
 3. Open **Installed Mods** to see what is installed and turn mods on or off.
 4. You can have Mod.io sideload mods and UE4SS mods installed at the same time.
 
-For Steam players: click **Save Launch Options** after entering any extra arguments. If Steam is not set up yet (or still uses the older launch wrapper), the manager will offer to install its Steam launch setup and restart Steam. You can also use **Set Up Steam** manually at any time. Steam must use the manager's launch setup to start Abiotic Factor with your enabled Mod.io sideload mods. Once Steam is configured, later saves update the options used on the next launch. The Steam wrapper now starts through a hidden helper, so no PowerShell console should flash when you press Play.
+For Steam players: click **Save Launch Options** after entering any extra arguments. If Steam is not set up yet (or still uses the older launch wrapper), the manager will offer to install its Steam launch setup and restart Steam. You can also use **Set Up Steam** manually at any time. Steam must use the manager's launch setup to start Abiotic Factor with your enabled Mod.io sideload mods. Once Steam is configured, later saves update the options used on the next launch. The Steam command now uses a native Windows GUI helper that starts the game directly; it does not start cmd.exe or powershell.exe. After updating the manager files, open the manager and click Set Up Steam once (or save Launch Options and accept the Steam setup prompt) to replace any older Steam command that starts PowerShell directly. Restart Steam when prompted. Merely replacing the application files does not change Steam's saved launch command.
 
 ## Uninstall
 

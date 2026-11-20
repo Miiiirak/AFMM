@@ -311,7 +311,7 @@ public sealed class SettingsPage : Page
                 var owner = WinRT.Interop.WindowNative.GetWindowHandle(App.MainWindow!);
                 var choice = ShowWindowsConfirmation(
                     owner,
-                    "Your additional launch options have been saved. Steam is not yet configured to use the manager's launch wrapper. Restart Steam now to install the wrapper and apply your saved options? Choosing No copies the required launch command to your clipboard so you can add it manually in Steam properties.",
+                    "Your additional launch options have been saved. Steam is still using an older launch command. Restart Steam now to install the updated native helper, which starts the game without opening Command Prompt or PowerShell? Choosing No copies the updated launch command to your clipboard so you can add it manually in Steam properties.",
                     "Set Up Steam to apply saved launch options?",
                     MessageBoxYesNo | MessageBoxQuestionIcon | MessageBoxDefaultNo);
                 await _service.ApplySteamLaunchOptionsAsync(choice == MessageBoxYes);
@@ -319,7 +319,7 @@ public sealed class SettingsPage : Page
             }
             else if (_service.IsSteamGameInstall)
             {
-                _launchOptionsStatus.Text = "Additional launch options saved. Steam is already configured; the hidden launch wrapper will use them the next time you start the game.";
+                _launchOptionsStatus.Text = "Additional launch options saved. Steam is already configured; the native helper will use them the next time you start the game without opening a console window.";
             }
             else
             {

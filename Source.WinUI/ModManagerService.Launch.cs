@@ -21,7 +21,8 @@ public sealed partial class ModManagerService
                 var configPath = FindSteamConfigPath();
                 var options = ReadSteamLaunchOptionsFromConfig(configPath);
                 return FindSteamWrapperMarker(options) >= 0 &&
-                    options.IndexOf("SteamLaunchWrapperHost.exe", StringComparison.OrdinalIgnoreCase) >= 0;
+                    options.IndexOf("SteamLaunchWrapperHost.exe", StringComparison.OrdinalIgnoreCase) >= 0 &&
+                    options.IndexOf("--native-direct", StringComparison.OrdinalIgnoreCase) >= 0;
             }
             catch { return false; }
         }
@@ -307,7 +308,7 @@ public sealed partial class ModManagerService
         if (!File.Exists(SteamWrapperHostPath))
             throw new FileNotFoundException("The hidden Steam launch host is missing. Re-extract the complete manager release.", SteamWrapperHostPath);
 
-        var wrapper = "\"" + SteamWrapperHostPath + "\" \"" + SteamWrapperScriptPath + "\" %command%";
+        var wrapper = "\"" + SteamWrapperHostPath + "\" --native-direct \"" + SteamWrapperScriptPath + "\" %command%";
         return string.IsNullOrWhiteSpace(extraGameArguments) ? wrapper : wrapper + " " + extraGameArguments;
     }
 

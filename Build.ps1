@@ -39,7 +39,7 @@ try {
 }
 finally { Pop-Location }
 
-# Compile the GUI-subsystem host used to start Steam's PowerShell wrapper without a console flash.
+# Compile the GUI-subsystem host that launches the game directly without starting cmd.exe or PowerShell.
 $steamHostSource = Join-Path $root "SteamLaunchWrapperHost.cs"
 $steamHostExecutable = Join-Path $stage "SteamLaunchWrapperHost.exe"
 $csharpCompiler = Join-Path $env:WINDIR "Microsoft.NET\Framework64\v4.0.30319\csc.exe"
