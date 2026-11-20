@@ -4,6 +4,7 @@ param(
 $ErrorActionPreference = "Stop"
 $AppRoot = [IO.Path]::GetFullPath($AppRoot.TrimEnd('\'))
 $ManagerExe = Join-Path $AppRoot "AbioticFactorModManager.exe"
+$ManagerAppExe = Join-Path $AppRoot "App\AbioticFactorModManager.exe"
 $DataRoot = Join-Path $AppRoot "Data"
 $BackupRoot = Join-Path $DataRoot "Backups"
 $ProgramDataRoot = [Environment]::GetFolderPath("CommonApplicationData")
@@ -50,7 +51,8 @@ if ($runningGame) {
 }
 foreach ($process in (Get-Process -Name "AbioticFactorModManager" -ErrorAction SilentlyContinue)) {
     try {
-        if ([string]::Equals($process.Path, $ManagerExe, [StringComparison]::OrdinalIgnoreCase)) {
+        if ([string]::Equals($process.Path, $ManagerExe, [StringComparison]::OrdinalIgnoreCase) -or
+            [string]::Equals($process.Path, $ManagerAppExe, [StringComparison]::OrdinalIgnoreCase)) {
             [void]$process.CloseMainWindow()
             if (-not $process.WaitForExit(10000)) { Stop-Process -Id $process.Id -Force }
         }

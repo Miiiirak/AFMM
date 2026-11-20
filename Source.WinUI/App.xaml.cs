@@ -13,7 +13,16 @@ public partial class App : Application
     {
         try
         {
-            var logDirectory = Path.Combine(AppContext.BaseDirectory, "Data", "Logs");
+            var appRoot = AppContext.BaseDirectory;
+            var parent = Directory.GetParent(appRoot)?.FullName;
+            if (!string.IsNullOrWhiteSpace(parent) &&
+                File.Exists(Path.Combine(parent, "AbioticFactorModManager.exe")) &&
+                File.Exists(Path.Combine(parent, "SteamLaunchWrapper.ps1")) &&
+                File.Exists(Path.Combine(parent, "Uninstall.ps1")))
+            {
+                appRoot = parent;
+            }
+            var logDirectory = Path.Combine(appRoot, "Data", "Logs");
             Directory.CreateDirectory(logDirectory);
             File.AppendAllText(Path.Combine(logDirectory, "WinUI-startup.log"),
                 DateTime.Now + Environment.NewLine + exception + Environment.NewLine);

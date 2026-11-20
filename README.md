@@ -17,7 +17,7 @@ There is no installer or setup wizard. Installing the manager is just extracting
 4. Approve the Windows administrator prompt. The manager needs permission to install and manage game mods and, when requested, update Abiotic Factor's Steam launch options.
 5. On the first run, check the **Settings** page and make sure the correct Abiotic Factor game folder is selected. Add your Mod.io API key there if you want to browse Mod.io mods.
 
-Keep the files together in the extracted folder. Do not move the EXE by itself or try to run it from inside the compressed archive.
+Keep the files together in the extracted folder. The main folder contains the launcher and setup files; the actual application and its required runtime files are grouped in the App subfolder. Do not move the EXE by itself or try to run it from inside the compressed archive.
 
 ## Install and manage mods
 

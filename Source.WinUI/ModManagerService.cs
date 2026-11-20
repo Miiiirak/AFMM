@@ -66,8 +66,11 @@ public sealed partial class ModManagerService
         var path = AppContext.BaseDirectory;
         for (var i = 0; i < 8 && !string.IsNullOrWhiteSpace(path); i++)
         {
-            if (Directory.Exists(Path.Combine(path, "Data")) &&
-                File.Exists(Path.Combine(path, "AbioticFactorModManager.exe")))
+            var hasManagerLauncher = File.Exists(Path.Combine(path, "AbioticFactorModManager.exe"));
+            var hasPortableMarkers =
+                File.Exists(Path.Combine(path, "SteamLaunchWrapper.ps1")) &&
+                File.Exists(Path.Combine(path, "Uninstall.ps1"));
+            if (hasManagerLauncher && (Directory.Exists(Path.Combine(path, "Data")) || hasPortableMarkers))
                 return path;
             path = Directory.GetParent(path)?.FullName ?? "";
         }
