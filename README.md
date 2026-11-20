@@ -3,7 +3,7 @@
 **Abiotic Factor Mod Manager** helps you manage both major kinds of Abiotic Factor mods in one place:
 
 - **Mod.io sideload mods** - browse and install sideload-ready Mod.io mods, then choose which ones are active.
-- **UE4SS mods** - install and manage UE4SS mods alongside your Mod.io sideload mods.
+- **UE4SS mods** - install and manage UE4SS mods from Nexus alongside your Mod.io sideload mods.
 
 You can use both types together. The manager keeps their install and launch setup organized so you do not have to manage mod folders and launch arguments by hand.
 
