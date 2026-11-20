@@ -301,16 +301,34 @@ public sealed class SettingsPage : Page
             _launchOptionsStatus.Text = "Could not set up Steam launch options: " + ex.Message;
         }
     }
-    private void SaveLaunchOptions()
+    private async void SaveLaunchOptions()
     {
         try
         {
             _service.SaveLaunchOptions(_launchOptions.Text);
-            _launchOptionsStatus.Text = "Additional launch options saved successfully.";
+            if (_service.IsSteamGameInstall && !_service.IsSteamWrapperConfigured)
+            {
+                var owner = WinRT.Interop.WindowNative.GetWindowHandle(App.MainWindow!);
+                var choice = ShowWindowsConfirmation(
+                    owner,
+                    "Your additional launch options have been saved. Steam is not yet configured to use the manager's launch wrapper. Restart Steam now to install the wrapper and apply your saved options? Choosing No copies the required launch command to your clipboard so you can add it manually in Steam properties.",
+                    "Set Up Steam to apply saved launch options?",
+                    MessageBoxYesNo | MessageBoxQuestionIcon | MessageBoxDefaultNo);
+                await _service.ApplySteamLaunchOptionsAsync(choice == MessageBoxYes);
+                _launchOptionsStatus.Text = _service.LastLaunchSyncStatus;
+            }
+            else if (_service.IsSteamGameInstall)
+            {
+                _launchOptionsStatus.Text = "Additional launch options saved. Steam is already configured; the hidden launch wrapper will use them the next time you start the game.";
+            }
+            else
+            {
+                _launchOptionsStatus.Text = "Additional launch options saved successfully. They will be applied when launching the game directly from the manager.";
+            }
         }
-        catch
+        catch (Exception ex)
         {
-            _launchOptionsStatus.Text = "Launch options could not save correctly. Make sure you are running this app as Administrator.";
+            _launchOptionsStatus.Text = "Launch options were saved, but Steam could not be updated: " + ex.Message;
         }
     }
     private async void SaveKey()

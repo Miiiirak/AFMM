@@ -11,6 +11,21 @@ public sealed partial class ModManagerService
 {
     public string CurrentLaunchOptions => BuildLaunchOptions();
     public string LastLaunchSyncStatus { get; private set; } = "";
+    public bool IsSteamWrapperConfigured
+    {
+        get
+        {
+            if (!IsSteamGameInstall) return false;
+            try
+            {
+                var configPath = FindSteamConfigPath();
+                var options = ReadSteamLaunchOptionsFromConfig(configPath);
+                return FindSteamWrapperMarker(options) >= 0 &&
+                    options.IndexOf("SteamLaunchWrapperHost.exe", StringComparison.OrdinalIgnoreCase) >= 0;
+            }
+            catch { return false; }
+        }
+    }
 
     public async Task ApplySteamLaunchOptionsAsync(bool restartSteam)
     {
@@ -177,6 +192,7 @@ public sealed partial class ModManagerService
 
     private string SteamWrapperDirectory => Path.Combine(_dataRoot, "Steam");
     private string SteamWrapperScriptPath => Path.Combine(SteamWrapperDirectory, "SteamLaunchWrapper.ps1");
+    private string SteamWrapperHostPath => Path.Combine(SteamWrapperDirectory, "SteamLaunchWrapperHost.exe");
     private string SteamManagedArgumentsPath => Path.Combine(SteamWrapperDirectory, "steam-modio-args.txt");
     private string SteamAdditionalArgumentsPath => Path.Combine(SteamWrapperDirectory, "steam-additional-args.txt");
     private string SteamManagerPathFile => Path.Combine(SteamWrapperDirectory, "manager-path.txt");
@@ -189,7 +205,12 @@ public sealed partial class ModManagerService
         if (!File.Exists(sourceScript))
             throw new FileNotFoundException("The Steam launch wrapper is missing from the manager installation.", sourceScript);
 
+        var sourceHost = Path.Combine(_baseRoot, "SteamLaunchWrapperHost.exe");
+        if (!File.Exists(sourceHost))
+            throw new FileNotFoundException("The hidden Steam launch host is missing from the manager installation.", sourceHost);
+
         File.Copy(sourceScript, SteamWrapperScriptPath, true);
+        File.Copy(sourceHost, SteamWrapperHostPath, true);
         WriteManagedSteamLaunchArguments();
     }
 
@@ -283,12 +304,10 @@ public sealed partial class ModManagerService
             extraGameArguments = Regex.Replace(extraGameArguments, @"\s{2,}", " ").Trim();
         }
 
-        var windows = Environment.GetFolderPath(Environment.SpecialFolder.Windows);
-        var powershell = Path.Combine(windows, @"System32\WindowsPowerShell\v1.0\powershell.exe");
-        if (!File.Exists(powershell))
-            throw new FileNotFoundException("Windows PowerShell could not be found.", powershell);
+        if (!File.Exists(SteamWrapperHostPath))
+            throw new FileNotFoundException("The hidden Steam launch host is missing. Re-extract the complete manager release.", SteamWrapperHostPath);
 
-        var wrapper = "\"" + powershell + "\" -NoLogo -NoProfile -NonInteractive -WindowStyle Hidden -ExecutionPolicy Bypass -File \"" + SteamWrapperScriptPath + "\" %command%";
+        var wrapper = "\"" + SteamWrapperHostPath + "\" \"" + SteamWrapperScriptPath + "\" %command%";
         return string.IsNullOrWhiteSpace(extraGameArguments) ? wrapper : wrapper + " " + extraGameArguments;
     }
 

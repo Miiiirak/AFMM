@@ -1,5 +1,7 @@
 Abiotic Factor Mod Manager 0.0.1 - Windows x64 portable release package.
 The root AbioticFactorModManager.exe is a lightweight launcher for the self-contained WinUI application in App\.
+The App folder contains the application and its required Windows App SDK and .NET runtime files.
+SteamLaunchWrapperHost.exe starts the Steam PowerShell wrapper without creating a visible console window.
 Keep the App folder and root support files together when extracting or moving the application.
 The application stores settings, downloads, logs, and backups in Data\ beside the root launcher.
 English (en-us) resources only. Optional .NET crash-dump/debugging helpers and build symbols are excluded.

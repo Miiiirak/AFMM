@@ -39,6 +39,20 @@ try {
 }
 finally { Pop-Location }
 
+# Compile the GUI-subsystem host used to start Steam's PowerShell wrapper without a console flash.
+$steamHostSource = Join-Path $root "SteamLaunchWrapperHost.cs"
+$steamHostExecutable = Join-Path $stage "SteamLaunchWrapperHost.exe"
+$csharpCompiler = Join-Path $env:WINDIR "Microsoft.NET\Framework64\v4.0.30319\csc.exe"
+if (-not (Test-Path -LiteralPath $steamHostSource)) {
+    throw "Steam launch host source is missing: $steamHostSource"
+}
+if (-not (Test-Path -LiteralPath $csharpCompiler)) {
+    throw "The .NET Framework C# compiler was not found: $csharpCompiler"
+}
+$steamHostIcon = Join-Path $source "Assets\AbioticFactorModManager.ico"
+& $csharpCompiler /nologo /target:winexe /platform:x64 /optimize+ "/out:$steamHostExecutable" "/win32icon:$steamHostIcon" $steamHostSource
+if ($LASTEXITCODE -ne 0) { throw "Steam launch host compilation failed with exit code $LASTEXITCODE." }
+
 # Include the runtime Steam wrapper, uninstaller, and distribution notes in the portable release payload.
 $releaseAssets = @("SteamLaunchWrapper.ps1", "Uninstall.ps1", "Uninstall.bat", "README.md", "PACKAGE-MANIFEST.txt")
 foreach ($asset in $releaseAssets) {
@@ -72,6 +86,7 @@ $required = @(
     "AbioticFactorModManager.pri",
     "App.xbf",
     "MainWindow.xbf",
+    "SteamLaunchWrapperHost.exe",
     "Microsoft.UI.Xaml.Controls.dll",
     "Microsoft.ui.xaml.dll",
     "Microsoft.WindowsAppRuntime.dll"

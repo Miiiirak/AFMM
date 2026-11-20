@@ -327,6 +327,11 @@ elseif (-not $removeSteamOptions -and $wrapperConfigs.Count -gt 0) {
     $fallbackDirectory = Join-Path $ProgramDataRoot ("AbioticFactorModManager-SteamFallback-" + [guid]::NewGuid().ToString("N"))
     $fallbackWrapper = Join-Path $fallbackDirectory "SteamLaunchWrapper.ps1"
     Copy-Item -LiteralPath (Join-Path $AppRoot "SteamLaunchWrapper.ps1") -Destination $fallbackWrapper -Force
+    $sourceHost = Join-Path $AppRoot "SteamLaunchWrapperHost.exe"
+    $fallbackHost = Join-Path $fallbackDirectory "SteamLaunchWrapperHost.exe"
+    if (Test-Path -LiteralPath $sourceHost -PathType Leaf) {
+        Copy-Item -LiteralPath $sourceHost -Destination $fallbackHost -Force
+    }
     [IO.File]::WriteAllText((Join-Path $fallbackDirectory "manager-path.txt"), $ManagerExe, (New-Object System.Text.UTF8Encoding($false)))
     [IO.File]::WriteAllText((Join-Path $fallbackDirectory "steam-modio-args.txt"), "", (New-Object System.Text.UTF8Encoding($false)))
 
@@ -338,8 +343,14 @@ elseif (-not $removeSteamOptions -and $wrapperConfigs.Count -gt 0) {
         [IO.File]::WriteAllText($additionalTarget, "", (New-Object System.Text.UTF8Encoding($false)))
     }
 
-    $powershellPath = Join-Path $WindowsDirectory "System32\WindowsPowerShell\v1.0\powershell.exe"
-    $fallbackCommand = '"' + $powershellPath + '" -NoLogo -NoProfile -NonInteractive -WindowStyle Hidden -ExecutionPolicy Bypass -File "' + $fallbackWrapper + '" %command%'
+    if (Test-Path -LiteralPath $fallbackHost -PathType Leaf) {
+        $fallbackCommand = '"' + $fallbackHost + '" "' + $fallbackWrapper + '" %command%'
+    }
+    else {
+        # Backward compatibility for an older installation that predates the hidden Steam host.
+        $powershellPath = Join-Path $WindowsDirectory "System32\WindowsPowerShell\v1.0\powershell.exe"
+        $fallbackCommand = '"' + $powershellPath + '" -NoLogo -NoProfile -NonInteractive -WindowStyle Hidden -ExecutionPolicy Bypass -File "' + $fallbackWrapper + '" %command%'
+    }
     foreach ($entry in $wrapperConfigs) {
         $trailingArguments = Get-ArgumentsAfterCommand $entry.Info.Value
         $newOptions = $fallbackCommand
